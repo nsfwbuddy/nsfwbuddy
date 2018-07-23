@@ -1,0 +1,13 @@
+.Redirect {
+  width: 90%;
+  margin: 1em auto;
+}
+.FullUrl {
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 1.2rem;
+}
+
+.AgeConfirm {
+  margin-left: 1.2rem;
+}

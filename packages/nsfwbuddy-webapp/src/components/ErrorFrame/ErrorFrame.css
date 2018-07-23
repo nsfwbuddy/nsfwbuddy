@@ -1,0 +1,14 @@
+.ErrorFrame {
+  margin-top: 1rem;
+}
+
+.ErrorFrame-Title {
+  font-size: 2em;
+  font-family: sans-serif;
+  color: rgb(206, 17, 38);
+  white-space: pre-wrap;
+  margin: 0px 2rem 0.75rem 0px;
+  flex: 0 0 auto;
+  max-height: 50%;
+  overflow: auto;
+}

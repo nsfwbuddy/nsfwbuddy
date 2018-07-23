@@ -1,0 +1,26 @@
+language: node_js
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c "CREATE DATABASE nsfwbuddy;" -U postgres
+  - psql -c "CREATE USER nsfwbuddy WITH PASSWORD 'nsfwbuddy';" -U postgres
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - nsfwbuddy-server-api/node_modules
+    - nsfwbuddy-shared/node_modules
+    - nsfwbuddy-telegram-bot/node_modules
+    - nsfwbuddy-webapp/node_modules
+
+node_js:
+  - '8.5'
+
+env:
+  - JOB=test
+
+script:
+  - 'if [ "$JOB" = "test" ]; then yarn test; fi'

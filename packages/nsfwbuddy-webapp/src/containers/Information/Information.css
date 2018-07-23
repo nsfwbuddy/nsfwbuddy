@@ -1,0 +1,9 @@
+.Information {
+  margin-top: 2rem;
+}
+
+.Information h1,
+.Information h2,
+.Information h3 {
+  line-height: 2;
+}

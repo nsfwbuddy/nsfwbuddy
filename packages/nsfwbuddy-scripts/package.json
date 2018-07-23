@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "nsfwbuddy-scripts",
+  "version": "1.0.0",
+  "description": "NSFW Buddy Scripts",
+  "bin": {
+    "nsfwbuddy-scripts": "./bin/nsfwbuddy-scripts.js"
+  },
+  "files": [
+    "bin",
+    "scripts"
+  ],
+  "repository": "https://github.com/nsfwbuddy/nsfwbuddy.git",
+  "author": "Roberto Mauro <erremauro@icloud.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "yarn jest --env=node"
+  },
+  "devDependencies": {
+    "jest": "^23.4.1"
+  },
+  "dependencies": {
+    "cross-spawn": "^6.0.5"
+  }
+}

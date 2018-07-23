@@ -1,0 +1,35 @@
+.Footer {
+  margin-top: 6rem;
+  line-height: 4rem;
+  color: #222;
+  font-size: small;
+  width: 100%;
+  background-color: #F8F9FA;
+  text-align: center;
+  border-top: 1px solid rgba(0,0,0,0.15);
+}
+
+.footerLink {
+  color: #666;
+  font-weight: 400;
+  padding: 0 1.2rem;
+}
+
+@media (max-width: 320px) {
+  .d-hide-xs {
+    display: none !important;
+  }
+}
+
+.footerLink:hover {
+  color: #666;
+}
+
+.footerVersion {
+  padding: 0 1.2rem;
+}
+
+.Footer.fixed {
+  position: fixed;
+  bottom: 0;
+}

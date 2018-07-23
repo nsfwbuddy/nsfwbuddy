@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "nsfwbuddy-shared",
+  "version": "1.0.0",
+  "description": "NSFW Buddy Shared Library",
+  "main": "index.js",
+  "repository": "https://github.com/nsfwbuddy/nsfwbuddy.git",
+  "author": "Roberto Mauro <erremauro@icloud.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "nsfwbuddy-scripts test"
+  },
+  "devDependencies": {
+    "nsfwbuddy-scripts": "^1.0.0",
+    "jest": "^23.4.1"
+  }
+}

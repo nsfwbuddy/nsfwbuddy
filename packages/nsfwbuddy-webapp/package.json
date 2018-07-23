@@ -1,0 +1,56 @@
+{
+  "private": true,
+  "name": "nsfwbuddy-webapp",
+  "version": "1.0.0",
+  "description": "NSFW Buddy Client Web Application",
+  "main": "index.js",
+  "repository": "https://github.com/nsfwbuddy/nsfwbuddy.git",
+  "author": "Roberto Mauro <erremauro@icloud.com>",
+  "homepage": "https://www.nsfwbuddy.com",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.5.0 <10.6.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "create:action": "./scripts/create-action.js",
+    "create:container": "./scripts/create-container.js",
+    "create:component": "./scripts/create-component.js"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-regular-svg-icons": "^5.1.0",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "^0.1.0-11",
+    "bootstrap": "^4.1.1",
+    "debug": "^3.1.0",
+    "deepmerge": "^2.0.1",
+    "history": "^4.7.2",
+    "humps": "^2.0.1",
+    "nsfwbuddy-shared": "^1.0.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-intl": "^2.4.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.8",
+    "react-scripts": "1.0.17",
+    "reactstrap": "^6.1.0",
+    "rear-logger": "^1.0.0",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "thunk": "^0.0.1",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "fs-extra": "^4.0.3",
+    "jest-enzyme": "^6.0.2",
+    "react-test-renderer": "^16.4.1"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "private": true,
+  "name": "nsfwbuddy-server-api",
+  "version": "1.0.0",
+  "description": "NSFW Buddy Server API",
+  "main": "index.js",
+  "repository": "https://github.com/nsfwbuddy/nsfwbuddy.git",
+  "author": "Roberto Mauro <erremauro@icloud.com>",
+  "homepage": "https://www.nsfwbuddy.com/api",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.5.0 <10.6.0"
+  },
+  "scripts": {
+    "start": "nsfwbuddy-scripts start bin/www",
+    "test": "nsfwbuddy-scripts test"
+  },
+  "dependencies": {
+    "accept-language": "^3.0.18",
+    "bcrypt": "^3.0.0",
+    "body-parser": "~1.18.2",
+    "commander": "^2.12.2",
+    "compression": "^1.7.1",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "knex": "^0.14.6",
+    "moment": "^2.22.2",
+    "morgan": "~1.9.0",
+    "pg": "^7.4.0",
+    "pug": "2.0.0-beta11",
+    "rear-logger": "^1.0.0",
+    "serve-favicon": "~2.4.5"
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0",
+    "fs-extra": "^4.0.3",
+    "glob": "^7.1.2",
+    "jest": "^23.3.0",
+    "nsfwbuddy-scripts": "^1.0.0",
+    "nodemon": "^1.12.5",
+    "sqlite3": "^4.0.1",
+    "supertest": "^3.1.0"
+  }
+}

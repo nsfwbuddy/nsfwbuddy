@@ -1,0 +1,198 @@
+#! /usr/bin/env node
+const fs = require('fs-extra');
+const os = require('os');
+const pkg = require('../package.json');
+const env = require('../config/env');
+const createApp = require('../app');
+const http = require('http');
+const https = require('https');
+const program = require('commander');
+const createLogger = require('rear-logger');
+const log = createLogger('express:server');
+const ifaces = os.networkInterfaces();
+let logger, server, port;
+
+if (require.main === module) {
+  program
+    .version(`${pkg.name}@v${pkg.version}`)
+    .usage('[options]')
+    .option('-p, --port [port]', `Port to use`, env.PORT)
+    .option('-a, --address [address]', `Address to use`, env.HOST)
+    .option('-S, --ssl [value]', 'Enable https', (v) => v === 'true', env.SSL.toLowerCase() === 'true')
+    .option('-C, --cert [path]', 'Path to ssl cert file', env.CERT)
+    .option('-K, --key [path]', 'Path to ssl key file', env.KEY)
+    .option('-g, --gzip [value]', 'Serve gzip files when possible', (v) => v === 'true', true)
+    .option('-q, --quiet', 'Turn off logging completely')
+    .option('-v, --verbose', 'Turn on server logging')
+    .parse(process.argv);
+
+  Main(program);
+}
+
+function Main(opts) {
+  logger = createLogger('express:server', { enabled: !opts.quiet });
+
+  port = normalizePort(opts.port);
+  const app = createApp(opts);
+
+  if (!opts.ssl) {
+    server = http.createServer(app);
+  } else {
+    if (!fs.pathExistsSync(opts.cert)) {
+      log.error(`No certificate found at path ${opts.cert}`);
+      process.exit(1);
+    }
+
+    if (!fs.pathExistsSync(opts.key)) {
+      log.error(`No private key found at path ${opts.key}`);
+      process.exit(1);
+    }
+
+    server = https.createServer({
+      cert: fs.readFileSync(opts.cert),
+      key: fs.readFileSync(opts.key)
+    }, app);
+  }
+
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', () => onListening(opts));
+
+  configurGracefulShutdown();
+}
+
+/**
+ *  Listen to SIGINT and SIGTERM events to
+ *  gracefully shutdown the applcation.
+ */
+
+function configurGracefulShutdown() {
+  process.on('SIGINT', () => {
+    logger.clearLine();
+    logger.quit('Server stopped.');
+    process.exit(0)
+  });
+
+  process.on('SIGTERM', () => {
+    logger.clearLine();
+    logger.quit('Server stopped.');
+    process.exit(0)
+  });
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ *
+ * @param {Error} error
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  const bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      log.error(`${bind} requires elevated privileges`)
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      log.error(`${bind} is already in use.`)
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ *
+ * @param {Object} opts Script optons
+ */
+
+function onListening(opts) {
+  logger.clear();
+  logger.highlight(`${pkg.name}@v${pkg.version}`);
+  logger.log();
+  logger.success(`Server started. %c(${env.NODE_ENV})%c`, 'magenta', 'reset');
+  logger.log();
+  logger.info('Serving content from %c./public', 'underline');
+  logger.info('Available on:');
+
+  const hostname = opts.hostname === '0.0.0.0' ? '127.0.0.1' : opts.hostname;
+  const protocol = opts.ssl ? 'https://' : 'http://';
+
+  printInterfaces(opts.port, hostname, protocol);
+
+  logger.log();
+  logger.hint('Hit CTRL-C to stop the server.');
+
+  // const addr = server.address();
+  // const bind = typeof addr === 'string'
+  //   ? 'pipe ' + addr
+  //   : 'port ' + addr.port;
+
+  // logger.info(`Listening on ${bind}`);
+}
+
+function printInterfaces (port, hostname, protocol) {
+  if (hostname && hostname !== '127.0.0.1') {
+    logger.log('        => %c' + protocol + hostname + ':' + port, 'bold_underline_white')
+  } else {
+    Object.keys(ifaces).forEach((dev) => {
+      ifaces[dev].forEach((details) => {
+        if (details.family === 'IPv4') {
+          logger.log('        => %c' + protocol + details.address + ':' + port, 'bold_underline_white')
+        }
+      })
+    })
+  }
+}
+
+function getInterfaces (port, address, ssl) {
+  const hostname = address === '0.0.0.0' ? '127.0.0.1' : address
+  const protocol = ssl ? 'https://' : 'http://'
+  const ret = []
+
+  if (address && address !== '0.0.0.0') {
+    ret.push(protocol + hostname + ':' + port)
+  } else {
+    Object.keys(ifaces).forEach((dev) => {
+      ifaces[dev].forEach((details) => {
+        if (details.family === 'IPv4') {
+          ret.push(protocol + details.address + ':' + port)
+        }
+      })
+    })
+  }
+
+  return ret
+}
+
+/**
+ * Normalize a port into a number, string, or false.
+ *
+ * @param {Number|string} value Port value
+ */
+
+function normalizePort(value) {
+  const port = parseInt(value, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return value;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}

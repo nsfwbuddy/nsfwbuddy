@@ -1,0 +1,42 @@
+{
+  "private": true,
+  "name": "nsfwbuddy",
+  "description": "NSFW Buddy",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Roberto Mauro <erremauro@icloud.com>",
+  "homepage": "https://www.nsfwbuddy.com",
+  "repository": "https://github.com/nsfwbuddy/nsfwbuddy.git",
+  "keywords": [
+    "nsfw",
+    "urlshortner",
+    "redirect",
+    "parental control"
+  ],
+  "engines": {
+    "node": ">=8.5.0 <10.6.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "precommit": "yarn test",
+    "prepush": "yarn test",
+    "test": "node packages/nsfwbuddy-scripts/scripts/test.js && cd packages/nsfwbuddy-webapp && yarn test",
+    "api:start": "cd packages/nsfwbuddy-server-api && yarn start",
+    "api:test": "cd packages/nsfwbuddy-server-api && yarn test",
+    "api:db": "cd packages/nsfwbuddy-server-api && yarn knex",
+    "webapp:start": "cd packages/nsfwbuddy-webapp && yarn start",
+    "webapp:test": "cd packages/nsfwbuddy-webapp && yarn test",
+    "webapp:build": "cd packages/nsfwbuddy-webapp && yarn build",
+    "webapp:create:component": "cd packages/nsfwbuddy-webapp && yarn create:component",
+    "webapp:create:container": "cd packages/nsfwbuddy-webapp && yarn create:container",
+    "webapp:create:action": "cd packages/nsfwbuddy-webapp && yarn create:action",
+    "bot:start": "cd packages/nsfwbuddy-telegram-bot && yarn start",
+    "bot:test": "cd packages/nsfwbuddy-telegram-bot && yarn test",
+    "shared:test": "cd packages/nsfwbuddy-shared && yarn test"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3"
+  }
+}
